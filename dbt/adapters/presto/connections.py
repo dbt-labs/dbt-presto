@@ -62,13 +62,13 @@ class ConnectionWrapper(object):
         self.handle.close()
 
     def commit(self):
-        self.handle.commit()
+        pass
 
     def rollback(self):
-        self.handle.rollback()
+        pass
 
     def start_transaction(self):
-        self.handle.start_transaction()
+        pass
 
     def fetchall(self):
         if self._cursor is None:
