@@ -1,0 +1,47 @@
+# Builds the presto plugin and releases it to pypi
+name: Build and Release
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+  
+  # release version number that must be updated for each release
+  env:
+    version_number: '0.19.2'
+
+jobs:
+  bumpVersion:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Python
+        uses: actions/setup-python@v2.2.2
+        with: 
+          python-version:3.8
+          
+      - uses: actions/checkout@v2
+
+      - name: Bump
+        run: |
+          python3 -m venv env
+          source env/bin/activate
+          bumpversion --config-file .bumpversion-dbt.cfg patch --new-version ${{env.version_number}}
+          bumpversion --config-file .bumpversion.cfg patch --new-version ${{env.version_number}} --allow-dirty
+          git status
+          
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Python
+        uses: actions/setup-python@v2.2.2
+        with: 
+          python-version:3.8
+          
+      - uses: actions/checkout@v2
+
+      - name: Bump
+        run: |
+          python3 -m venv env
+          source env/bin/activate
+          pip install twine
+          pip install wheel setuptools
+          python setup.py sdist bdist_wheel
+          twine check dist/dbt_presto-${{env.version_number}}-py3-none-any.whl dist/dbt-presto-${{env.version_number}}.tar.gz
