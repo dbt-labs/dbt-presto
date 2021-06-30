@@ -1,12 +1,13 @@
 # Builds the presto plugin and releases it to pypi
 name: Build and Release
 
+on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
   
   # release version number that must be updated for each release
-  env:
-    version_number: '0.19.2'
+env:
+  version_number: '0.19.2'
 
 jobs:
   bumpVersion:
