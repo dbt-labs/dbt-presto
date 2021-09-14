@@ -157,12 +157,16 @@ class PrestoConnectionManager(SQLConnectionManager):
                 credentials.password,
             )
             if credentials.http_scheme and credentials.http_scheme != "https":
-                raise dbt.exceptions.RuntimeException("http_scheme must be set to 'https' for 'ldap' method.")
+                raise dbt.exceptions.RuntimeException(
+                    "http_scheme must be set to 'https' for 'ldap' method."
+                )
             http_scheme = "https"
         elif credentials.method == 'kerberos':
             auth = prestodb.auth.KerberosAuthentication()
             if credentials.http_scheme and credentials.http_scheme != "https":
-                raise dbt.exceptions.RuntimeException("http_scheme must be set to 'https' for 'kerberos' method.")
+                raise dbt.exceptions.RuntimeException(
+                    "http_scheme must be set to 'https' for 'kerberos' method."
+                )
             http_scheme = "https"
         else:
             auth = prestodb.constants.DEFAULT_AUTH
