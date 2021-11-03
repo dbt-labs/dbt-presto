@@ -151,8 +151,8 @@
 {% endmacro %}
 
 
-{% macro presto__load_csv_rows(model, agate_table) %}
-  {{ return(basic_load_csv_rows(model, 1000, agate_table)) }}
+{% macro presto__get_batch_size() %}
+  {{ return(1000) }}
 {% endmacro %}
 
 
