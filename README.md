@@ -1,5 +1,7 @@
 ## dbt-presto
 
+## ⚠️ We are planning to archive the `dbt-presto` plugin. [Read the full announcement](https://github.com/dbt-labs/dbt-presto/discussions/83)
+
 ### Documentation
 For more information on using Presto with dbt, consult the dbt documentation:
 - [Presto profile](https://docs.getdbt.com/docs/profile-presto)
