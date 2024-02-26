@@ -24,6 +24,7 @@ class PrestoCredentials(Credentials):
     user: str
     password: Optional[str] = None
     method: Optional[str] = None
+    cert: Optional[str] = None
     http_headers: Optional[Dict[str, str]] = None
     http_scheme: Optional[str] = None
     _ALIASES = {
@@ -39,7 +40,7 @@ class PrestoCredentials(Credentials):
         return self.host
 
     def _connection_keys(self):
-        return ('host', 'port', 'user', 'database', 'schema')
+        return ('host', 'port', 'user', 'database', 'schema', 'cert')
 
 
 class ConnectionWrapper(object):
@@ -189,6 +190,7 @@ class PrestoConnectionManager(SQLConnectionManager):
             auth=auth,
             isolation_level=IsolationLevel.AUTOCOMMIT
         )
+        presto_conn._http_session.verify = credentials.cert
         connection.state = 'open'
         connection.handle = ConnectionWrapper(presto_conn)
         return connection
